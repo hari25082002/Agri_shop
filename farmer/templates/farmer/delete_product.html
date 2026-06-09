@@ -1,0 +1,30 @@
+{% extends "farmer/farmer_home.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    {% if messages %}
+        <div class="container border">
+            <div class="alert alert-success" id="message-alert" role="alert">
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <script>
+            setTimeout(function() {
+                var alertElement = document.getElementById('message-alert');
+                if (alertElement) {
+                    alertElement.style.display = 'none';
+                }
+            }, 5000); // Hide after 5 seconds (5000 milliseconds)
+        </script>
+    {% endif %}
+    <h2>Confirm Deletion of {{ product.product_name }}</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}  <!-- Use crispy forms if you have it set up -->
+        <button type="submit" class="btn btn-danger">Confirm Delete</button>
+        <a href="{% url 'farmer_products' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+{% endblock content %}

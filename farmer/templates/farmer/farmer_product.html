@@ -1,0 +1,56 @@
+{% extends "farmer/farmer_home.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    {% if messages %}
+            <div class="container border">
+                <div class="alert alert-success" id="message-alert" role="alert">
+                    <ul>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <script>
+                setTimeout(function() {
+                    var alertElement = document.getElementById('message-alert');
+                    if (alertElement) {
+                        alertElement.style.display = 'none';
+                    }
+                }, 5000); // Hide after 5 seconds (5000 milliseconds)
+            </script>
+    {% endif %}
+    <h1>Your Products</h1>
+    {% if farmer_products %}
+        <div class="row">
+            {% for product in farmer_products %}
+                <div class="col-md-auto mb-4 ">
+                    <div class="card" style="width: 15rem; height: 20rem;">
+                        <img src="{{ product.product_image.url }}" class="card-img-top" alt="product_image" style="height: 100px; object-fit: cover;">
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div>
+                                <p class="card-text">ID : {{product.product_id}}</p>
+                                <p>Name : {{ product.product_name }}</p>
+                                <p>Price: ${{ product.product_price }} per Kg</p>
+                                <p>Quantity: {{ product.quantity }} kg </p>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <form method="POST" action="{% url 'product_delete' product.product_id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>                                    
+                                </div>
+                                <div class="col">
+                                    <a class="btn btn-primary mt-auto" href="{% url 'farmer_product_update' %}?search={{ product.product_id }}" role="button">Update</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No products found.</p>
+    {% endif %}
+{% endblock content %}

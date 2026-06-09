@@ -1,0 +1,48 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Agri Shop</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+        .full-width-img {
+            width: 100%;
+            height: 100vh;
+            object-fit: cover;
+        }
+        .container-fluid {
+            position: relative;
+            height: 100vh;
+        }
+        .button-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-success"><h1 class="text-white text-center">AGRI_SHOP</h1></header>
+    <div class="container-fluid">
+        <img src="{% static 'core/home_bg.jpg' %}" alt="Background Image" class="full-width-img"> 
+        <div class="button-container">
+            <div class="d-grid gap-5">
+                <!-- Use the URL tag to route to the 'register' view -->
+                <a class="btn btn-primary" href="{% url 'login' %}" role="button">Farmer</a>
+                <a class="btn btn-primary" href="{% url 'publiclogin' %}" role="button">User</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
